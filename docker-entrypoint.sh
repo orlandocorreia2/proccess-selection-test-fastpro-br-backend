@@ -15,7 +15,4 @@ yarn seed:config
 
 yarn seed:run
 
-# yarn dev:server
-
-yarn start
-
+yarn dev:server
