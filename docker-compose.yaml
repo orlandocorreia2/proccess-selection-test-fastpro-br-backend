@@ -1,0 +1,39 @@
+version: '3.0'
+
+services:
+  api:
+    container_name: fastpro_br_api
+    build: .
+    ports:
+      - 8888:8888
+    depends_on:
+      - db
+    networks:
+      - fastpro_br_network
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - APP_ENV=local
+  db:
+    container_name: fastpro_br_db
+    image: postgres
+    environment:
+      - POSTGRES_DB=fastpro_br
+      - POSTGRES_USER=fastpro_br
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5432:5432
+    volumes:
+      - ./src/shared/database/data:/var/lib/postgresql/data
+    networks:
+      - fastpro_br_network
+  db_redis:
+    container_name: fastpro_br_redis
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    networks:
+      - fastpro_br_network
+networks:
+  fastpro_br_network:
+    driver: bridge
